@@ -1,0 +1,54 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  5                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      fvOptions;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+porousWalls
+{
+    type            explicitPorositySource;//模拟多孔介质区域（显式）
+    active          yes;
+
+    explicitPorositySourceCoeffs
+    {
+        selectionMode   cellZone;//在toposet中配置
+        cellZone        porosz;//在toposet中配置
+
+        type            DarcyForchheimer;
+
+	    f 561; 
+        d 9.8e6; //本案例不考虑粘性损失
+        DarcyForchheimerCoeffs
+      {
+            d   ($d $d $d);
+            f   ($f $f $f);
+                       
+        coordinateSystem
+        {
+            type    cartesian;
+            origin  (0 0 0);
+            coordinateRotation
+            {
+                type    axesRotation;
+                e1  (1 0 0);
+                e2  (0 1 0);
+				e3  (0 0 1);
+            }
+        }
+	  }
+    }
+}
+
+
+// ************************************************************************* //

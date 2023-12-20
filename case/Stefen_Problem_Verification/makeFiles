@@ -1,0 +1,2 @@
+cat log.CoMeTFoam | grep -w 'gamma_L_Ave =' | cut -d' ' -f3 | tr -d '(' > liquidFraction
+cat log.CoMeTFoam | grep -w 'Time =' | cut -d' ' -f3 | tr -d '(' > time

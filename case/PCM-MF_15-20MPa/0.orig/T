@@ -1,0 +1,69 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.3.0                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      T;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 0 1 0 0 0];
+
+internalField   uniform 279.15;
+
+boundaryField
+{
+    upperWall
+    {
+	    type            externalWallHeatFluxTemperature;
+        kappaMethod     lookup;  
+        mode            coefficient;
+        q               0;              // q模式时填写，表示辐射热流密度
+        h               uniform 250;        // 对流换热系数[W/K/m2]
+        thicknessLayers (0.0 0.0 0.0 0.0);      // layer 有几层表面涂层及其厚度，我这里四层0厚度，就是没有涂层
+        kappaLayers     (0 0 0 0);    
+        Ta              uniform 301.15;    // ambient temperature 环境温度
+        value           uniform 279.15;   // initial temperature 边界初始温度
+        kappa           "k"; 
+    }
+    axis
+    {
+        type            empty;
+    }
+    lowerWall
+    {
+        type	    	zeroGradient;
+    }
+    oWall
+    {
+		type            externalWallHeatFluxTemperature;
+        kappaMethod     lookup;  
+        mode            coefficient;
+        q               0;              // q模式时填写，表示辐射热流密度
+        h               uniform 300;        // 对流换热系数[W/K/m2]
+        thicknessLayers (0.0 0.0 0.0 0.0);      // layer 有几层表面涂层及其厚度，我这里四层0厚度，就是没有涂层
+        kappaLayers     (0 0 0 0);    
+        Ta              uniform 301.15;    // ambient temperature 环境温度
+        value           uniform 279.15;   // initial temperature 边界初始温度
+        kappa           "k"; 
+    }
+    front
+    {
+        type            wedge;
+    }	
+	Back
+    {
+        type            wedge;
+    }
+}
+
+
+// ************************************************************************* //
